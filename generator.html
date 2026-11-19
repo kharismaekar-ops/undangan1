@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generator Undangan - Dhani &amp; Fitrah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EFEFE9;
+    --card: #F8F8F4;
+    --ink: #5E4234;
+    --mut: #7d6556;
+    --acc: #8B6650;
+    --leaf: #4F7A5C;
+    --line: #d9d2c6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px 60px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Serif', Georgia, serif;
+    line-height: 1.6;
+  }
+  .wrap {
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 0 0 6px;
+  }
+  .sub {
+    text-align: center;
+    color: var(--mut);
+    font-size: 0.9rem;
+    margin: 0 0 24px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 18px;
+  }
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 0.95rem 'Noto Serif', serif;
+    margin-bottom: 14px;
+  }
+  textarea {
+    min-height: 110px;
+    resize: vertical;
+  }
+  .hint {
+    font-size: 0.8rem;
+    color: var(--mut);
+    margin: -8px 0 14px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--acc);
+    background: var(--acc);
+    color: #fff;
+    font: 600 0.92rem 'Noto Serif', serif;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn.wa {
+    background: var(--leaf);
+    border-color: var(--leaf);
+  }
+  .btn.outline {
+    background: transparent;
+    color: var(--ink);
+  }
+  .guest-item {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .guest-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+  .guest-name {
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+  .guest-url {
+    font-size: 0.78rem;
+    color: var(--mut);
+    word-break: break-all;
+    background: var(--bg);
+    padding: 8px 10px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .actions .btn {
+    padding: 9px 12px;
+    font-size: 0.84rem;
+  }
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--ink);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    transition: transform 0.3s ease;
+    z-index: 99;
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Generator Undangan</h1>
+  <p class="sub">Dhani &amp; Fitrah • 10 Januari 2027</p>
+
+  <div class="card">
+    <label for="baseUrl">Link Dasar Undangan</label>
+    <input id="baseUrl" type="url" value="https://kharismaekar-ops.github.io/undangan1/">
+
+    <label for="names">Daftar Nama Tamu (Bisa Banyak Sekaligus)</label>
+    <textarea id="names" placeholder="Budi Santoso&#10;Keluarga Bapak Hendra&#10;Rina &amp; Partner"></textarea>
+    <p class="hint">Pisahkan setiap nama tamu dengan baris baru (Enter).</p>
+
+    <label for="template">Template Pesan Pengantar</label>
+    <textarea id="template" style="min-height: 220px;">Assalamualaikum Warahmatullahi Wabarakatuh.
+
+Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i *[NAMA]* untuk menghadiri serta memberikan doa restu pada acara pernikahan kami:
+
+*Dhani & Fitrah*
+
+Informasi lengkap mengenai rangkaian acara dan lokasi dapat diakses melalui tautan berikut:
+[LINK]
+
+Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.
+
+Wassalamualaikum Warahmatullahi Wabarakatuh.</textarea>
+    <p class="hint">Gunakan <b>[NAMA]</b> dan <b>[LINK]</b> sebagai penanda otomatis.</p>
+
+    <button class="btn" id="generateBtn">Buat Daftar Link Tamu</button>
+  </div>
+
+  <div id="resultList"></div>
+</div>
+
+<div class="toast" id="toast">Teks undangan berhasil disalin!</div>
+
+<script>
+(function() {
+  var baseUrlEl = document.getElementById('baseUrl');
+  var namesEl = document.getElementById('names');
+  var templateEl = document.getElementById('template');
+  var resultList = document.getElementById('resultList');
+  var toast = document.getElementById('toast');
+
+  // Gunakan key penyimpanan baru agar template lama yang masih menyebut "Dani" tidak tertimpa
+  try {
+    var savedTpl = localStorage.getItem('wedding_tpl_dhani_fitrah');
+    if (savedTpl) templateEl.value = savedTpl;
+  } catch (e) {}
+
+  templateEl.addEventListener('input', function() {
+    try { localStorage.setItem('wedding_tpl_dhani_fitrah', templateEl.value); } catch (e) {}
+  });
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  }
+
+  function copyText(text) {
+    var x = document.createElement('textarea');
+    x.value = text;
+    x.style.position = 'fixed';
+    x.style.opacity = '0';
+    document.body.appendChild(x);
+    x.select();
+    try {
+      document.execCommand('copy');
+      showToast('Pesan undangan berhasil disalin ✓');
+    } catch (e) {
+      showToast('Gagal menyalin teks');
+    }
+    document.body.removeChild(x);
+  }
+
+  document.getElementById('generateBtn').addEventListener('click', function() {
+    var rawBase = baseUrlEl.value.trim().replace(/\/+$/, '') + '/';
+    var lines = namesEl.value.split('\n').map(function(s) { return s.trim(); }).filter(Boolean);
+
+    if (!lines.length) {
+      showToast('Masukkan minimal satu nama tamu terlebih dahulu');
+      namesEl.focus();
+      return;
+    }
+
+    resultList.innerHTML = '';
+
+    lines.forEach(function(name) {
+      // Gunakan encodeURIComponent agar simbol & atau spasi aman di URL
+      var personalUrl = rawBase + '?to=' + encodeURIComponent(name);
+      var fullMessage = templateEl.value
+        .replace(/\[NAMA\]/g, name)
+        .replace(/\[LINK\]/g, personalUrl);
+
+      var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(fullMessage);
+
+      var item = document.createElement('div');
+      item.className = 'guest-item';
+
+      var header = document.createElement('div');
+      header.className = 'guest-header';
+      var title = document.createElement('span');
+      title.className = 'guest-name';
+      title.textContent = name;
+      header.appendChild(title);
+
+      var urlBox = document.createElement('div');
+      urlBox.className = 'guest-url';
+      urlBox.textContent = personalUrl;
+
+      var actions = document.createElement('div');
+      actions.className = 'actions';
+
+      var copyBtn = document.createElement('button');
+      copyBtn.className = 'btn outline';
+      copyBtn.type = 'button';
+      copyBtn.textContent = 'Salin Teks';
+      copyBtn.onclick = function() { copyText(fullMessage); };
+
+      var waBtn = document.createElement('a');
+      waBtn.className = 'btn wa';
+      waBtn.href = waUrl;
+      waBtn.target = '_blank';
+      waBtn.rel = 'noopener';
+      waBtn.textContent = 'Kirim WhatsApp';
+
+      actions.appendChild(copyBtn);
+      actions.appendChild(waBtn);
+
+      item.appendChild(header);
+      item.appendChild(urlBox);
+      item.appendChild(actions);
+
+      resultList.appendChild(item);
+    });
+  });
+})();
+</script>
+</body>
+</html>
